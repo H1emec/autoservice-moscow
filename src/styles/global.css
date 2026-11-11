@@ -1,0 +1,489 @@
+/* ===== Токены ===== */
+:root {
+  color-scheme: dark;
+
+  --bg: #111214;
+  --bg-2: #191b1f;
+  --card: #202328;
+  --card-hover: #272b31;
+  --text: #ffffff;
+  --muted: #a0a3aa;
+  --accent: #ff6b35;
+  --accent-hover: #ff8453;
+  --accent-ink: #111214;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.2);
+  --error: #ff7b7b;
+  --success: #5ccb8f;
+
+  --font-display: 'Unbounded Variable', 'Arial Narrow', system-ui, sans-serif;
+  --font-text: 'Onest Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --radius-s: 10px;
+  --radius: 16px;
+  --radius-l: 24px;
+
+  --gutter: clamp(16px, 4.5vw, 40px);
+  --container: 1240px;
+  --header-h: 72px;
+  --section-y: clamp(88px, 11vw, 168px);
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ===== База ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 12px);
+  -webkit-text-size-adjust: 100%;
+  background: var(--bg);
+  scrollbar-color: #3a3e45 var(--bg);
+  scrollbar-width: thin;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  caret-color: var(--accent);
+  overflow-x: clip;
+}
+
+::selection {
+  background: rgba(255, 107, 53, 0.35);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #3a3e45;
+  border-radius: 10px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #50555e;
+}
+
+img,
+svg,
+video,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure,
+blockquote {
+  margin: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: -80px;
+  z-index: 200;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  border-radius: var(--radius-s);
+  transition: top 0.2s var(--ease);
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+/* ===== Каркас ===== */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+.section--alt {
+  background: var(--bg-2);
+}
+
+/* Заголовок раздела: больше воздуха сверху, чем снизу */
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 3.7vw, 3.1rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: manual;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  line-height: 1.65;
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+/* ===== Кнопки ===== */
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--text);
+  --btn-bd: var(--line-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 28px;
+  border-radius: 14px;
+  border: 1px solid var(--btn-bd);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+.btn svg {
+  transition: transform 0.3s var(--ease);
+}
+.btn:hover svg.btn__arrow {
+  transform: translateX(4px);
+}
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+.btn--primary {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--accent-ink);
+  --btn-bd: var(--accent);
+}
+.btn--primary:hover {
+  --btn-bg: var(--accent-hover);
+  --btn-bd: var(--accent-hover);
+}
+.btn--ghost:hover {
+  --btn-bd: #fff;
+  --btn-bg: rgba(255, 255, 255, 0.06);
+}
+.btn--sm {
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+.btn[disabled],
+.btn[aria-disabled='true'] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.btn[aria-busy='true'] {
+  cursor: progress;
+}
+
+/* Выбран не русский язык: страница скрыта на долю секунды, пока текст переводится (запасной показ через 1.2 с) */
+html.lang-pending body {
+  opacity: 0;
+  animation: lang-show 0s linear 1.2s forwards;
+}
+@keyframes lang-show {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== Появление при прокрутке =====
+   Без JS всё видно. Скрываем только когда скрипт подтвердил запуск. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== Формы (общее) ===== */
+.field {
+  display: grid;
+  gap: 8px;
+}
+.field__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #e4e5e8;
+}
+.field__label .req {
+  color: var(--accent);
+  margin-left: 2px;
+}
+.input {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 1rem;
+  transition:
+    border-color 0.2s var(--ease),
+    background-color 0.2s var(--ease);
+}
+.input::placeholder {
+  color: #7d8088;
+}
+.input:hover {
+  border-color: rgba(255, 255, 255, 0.34);
+}
+.input:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.22);
+}
+textarea.input {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+.field[data-invalid='true'] .input {
+  border-color: var(--error);
+}
+.field__error {
+  min-height: 0;
+  color: var(--error);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+.field__error:empty {
+  display: none;
+}
+
+.form-status {
+  display: grid;
+  gap: 10px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.form-status[hidden] {
+  display: none;
+}
+.form-status[data-state='success'] {
+  border-color: rgba(92, 203, 143, 0.5);
+  background: rgba(92, 203, 143, 0.08);
+}
+.form-status[data-state='error'] {
+  border-color: rgba(255, 123, 123, 0.55);
+  background: rgba(255, 123, 123, 0.08);
+}
+.form-status[data-state='demo'] {
+  border-color: rgba(255, 107, 53, 0.55);
+  background: rgba(255, 107, 53, 0.08);
+}
+.form-status strong {
+  font-weight: 600;
+}
+.form-status__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.consent {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 12px;
+  align-items: start;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+.consent input {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  margin: 1px 0 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--bg);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+.consent input::after {
+  content: '';
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid var(--accent-ink);
+  border-bottom: 2px solid var(--accent-ink);
+  transform: translateY(-1px) rotate(-45deg) scale(0);
+  transition: transform 0.2s var(--ease);
+}
+.consent input:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.consent input:checked::after {
+  transform: translateY(-1px) rotate(-45deg) scale(1);
+}
+.consent a {
+  color: #fff;
+}
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ===== Документы (политика, источники фото) ===== */
+.doc {
+  padding-top: calc(var(--header-h) + clamp(40px, 7vw, 96px));
+  padding-bottom: var(--section-y);
+}
+.doc h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 4vw, 3rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+  text-wrap: balance;
+  margin-bottom: 32px;
+}
+.doc h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  margin: 40px 0 12px;
+}
+.doc p,
+.doc li {
+  color: #d3d5d9;
+  max-width: 70ch;
+}
+.doc ul {
+  padding-left: 1.2em;
+  display: grid;
+  gap: 8px;
+}
+.doc .note {
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 107, 53, 0.5);
+  background: rgba(255, 107, 53, 0.08);
+  border-radius: 12px;
+  margin-bottom: 28px;
+  max-width: 70ch;
+}

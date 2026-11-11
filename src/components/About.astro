@@ -1,0 +1,99 @@
+---
+import { about } from '../config/process';
+---
+
+<section class="section about" id="about" aria-labelledby="about-title">
+  <div class="container about__grid">
+    <div class="about__intro reveal">
+      <h2 id="about-title" class="h2" data-i18n="about.title">{about.title}</h2>
+      <p class="lead" data-i18n="about.lead">{about.lead}</p>
+    </div>
+
+    <ol class="steps" role="list">
+      {about.steps.map((s, i) => (
+        <li class="step reveal" style={`--d:${i * 90}ms`}>
+          <span class="step__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h3 class="step__t" data-i18n={`about.s.${i}.t`}>{s.title}</h3>
+            <p class="step__p" data-i18n={`about.s.${i}.p`}>{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .about__grid {
+    display: grid;
+    gap: clamp(40px, 6vw, 88px);
+  }
+  .about__intro {
+    display: grid;
+    gap: 22px;
+    align-content: start;
+  }
+  .steps {
+    display: grid;
+    margin: 0;
+    padding: 0;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: clamp(56px, 12vw, 96px) 1fr;
+    align-items: baseline;
+    gap: 8px 16px;
+    padding: clamp(20px, 2.6vw, 32px) 0;
+    border-top: 1px solid var(--line-strong);
+  }
+  .step:last-child {
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .step__n {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .step__t {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+    text-transform: uppercase;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+  }
+  .step__p {
+    margin-top: 8px;
+    color: var(--muted);
+    max-width: 48ch;
+  }
+
+  /* Десктоп: заголовок и вводная в одной строке, ниже лента из четырёх этапов на всю ширину */
+  @media (min-width: 1024px) {
+    .about__intro {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+      gap: 48px;
+    }
+    .steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0 clamp(24px, 3vw, 48px);
+    }
+    .step {
+      grid-template-columns: minmax(0, 1fr);
+      align-content: start;
+      gap: 28px;
+      padding: 28px 0 0;
+      border-bottom: 0 !important;
+    }
+    .step__n {
+      font-size: clamp(3rem, 5.4vw, 5rem);
+    }
+    .step__t {
+      font-size: clamp(1rem, 1.35vw, 1.25rem);
+    }
+  }
+</style>

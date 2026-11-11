@@ -1,0 +1,35 @@
+---
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+const home = Astro.url.pathname === '/' ? '' : '/';
+---
+
+<div class="mbar" role="group" aria-label="Быстрые действия" data-i18n-attr="aria-label:mbar.label">
+  <a class="btn btn--ghost" href={`tel:${site.phone.href}`}><Icon name="phone" size={18} /> <span data-i18n="mbar.call">Позвонить</span></a>
+  <a class="btn btn--primary" href={`${home}#booking`} data-i18n="header.cta">Записаться</a>
+</div>
+
+<style>
+  .mbar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 90;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+    background: rgba(17, 18, 20, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 -1px 0 var(--line);
+  }
+  .mbar .btn {
+    min-height: 48px;
+    padding: 0 12px;
+  }
+  @media (min-width: 768px) {
+    .mbar {
+      display: none;
+    }
+  }
+</style>

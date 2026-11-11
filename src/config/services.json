@@ -1,0 +1,274 @@
+[
+  {
+    "id": "engine",
+    "name": "Двигатель",
+    "items": [
+      {
+        "name": "Диагностика двигателя",
+        "photo": "engine/01.jpg"
+      },
+      {
+        "name": "Замена подушек двигателя",
+        "photo": "engine/02.jpg"
+      },
+      {
+        "name": "Замена прокладок и сальников",
+        "photo": "engine/03.jpg"
+      },
+      {
+        "name": "Замена цепи и ремня ГРМ",
+        "photo": "engine/04.jpg"
+      },
+      {
+        "name": "Капитальный ремонт двигателя",
+        "photo": "engine/05.jpg"
+      },
+      {
+        "name": "Частичный ремонт двигателя",
+        "photo": "engine/06.jpg"
+      },
+      {
+        "name": "Чистка впускных клапанов",
+        "photo": "engine/07.jpg"
+      },
+      {
+        "name": "Эндоскопия двигателя",
+        "photo": "engine/08.jpg"
+      }
+    ],
+    "icon": "engine"
+  },
+  {
+    "id": "chassis",
+    "name": "Ходовая часть",
+    "items": [
+      {
+        "name": "Диагностика ходовой",
+        "photo": "chassis/01.jpg"
+      },
+      {
+        "name": "Замена амортизаторов и стоек",
+        "photo": "chassis/02.jpg"
+      },
+      {
+        "name": "Замена втулок и стоек стабилизатора",
+        "photo": "chassis/03.jpg"
+      },
+      {
+        "name": "Замена подшипников ступицы",
+        "photo": "chassis/04.jpg"
+      },
+      {
+        "name": "Замена рычагов и шаровых опор",
+        "photo": "chassis/05.jpg"
+      },
+      {
+        "name": "Развал-схождение",
+        "photo": "chassis/06.jpg"
+      },
+      {
+        "name": "Ремонт ходовой",
+        "photo": "chassis/07.jpg"
+      }
+    ],
+    "icon": "disc-3"
+  },
+  {
+    "id": "transmission",
+    "name": "Трансмиссия",
+    "items": [
+      {
+        "name": "Диагностика КПП",
+        "photo": "transmission/01.jpg"
+      },
+      {
+        "name": "Замена масла в коробке передач",
+        "photo": "transmission/02.jpg"
+      },
+      {
+        "name": "Замена сцепления",
+        "photo": "transmission/03.jpg"
+      },
+      {
+        "name": "Ремонт вариатора",
+        "photo": "transmission/04.jpg"
+      },
+      {
+        "name": "Ремонт гидроблока АКПП",
+        "photo": "transmission/05.jpg"
+      },
+      {
+        "name": "Ремонт гидротрансформатора",
+        "photo": "transmission/06.jpg"
+      },
+      {
+        "name": "Ремонт мехатроника",
+        "photo": "transmission/07.jpg"
+      },
+      {
+        "name": "Ремонт МКПП",
+        "photo": "transmission/08.jpg"
+      },
+      {
+        "name": "Ремонт ЭБУ АКПП",
+        "photo": "transmission/09.jpg"
+      },
+      {
+        "name": "Ремонт DSG и роботизированных коробок",
+        "photo": "transmission/10.jpg"
+      }
+    ],
+    "icon": "cog"
+  },
+  {
+    "id": "brakes",
+    "name": "Тормозная система",
+    "items": [
+      {
+        "name": "Диагностика тормозной системы",
+        "photo": "brakes/01.jpg"
+      },
+      {
+        "name": "Замена тормозной жидкости",
+        "photo": "brakes/02.jpg"
+      },
+      {
+        "name": "Замена тормозных дисков",
+        "photo": "brakes/03.jpg"
+      },
+      {
+        "name": "Замена тормозных колодок",
+        "photo": "brakes/04.jpg"
+      },
+      {
+        "name": "Замена тормозных шлангов",
+        "photo": "brakes/05.jpg"
+      },
+      {
+        "name": "Ремонт суппортов",
+        "photo": "brakes/06.jpg"
+      }
+    ],
+    "icon": "disc"
+  },
+  {
+    "id": "electrics",
+    "name": "Электрика и электроника",
+    "items": [
+      {
+        "name": "Компьютерная диагностика",
+        "photo": "electrics/01.jpg"
+      },
+      {
+        "name": "Поиск и устранение ошибок",
+        "photo": "electrics/02.jpg"
+      },
+      {
+        "name": "Проверка и замена аккумулятора",
+        "photo": "electrics/03.jpg"
+      },
+      {
+        "name": "Ремонт генератора",
+        "photo": "electrics/04.jpg"
+      },
+      {
+        "name": "Ремонт проводки",
+        "photo": "electrics/05.jpg"
+      },
+      {
+        "name": "Ремонт стартера",
+        "photo": "electrics/06.jpg"
+      }
+    ],
+    "icon": "zap"
+  },
+  {
+    "id": "cooling",
+    "name": "Охлаждение и отопление",
+    "items": [
+      {
+        "name": "Диагностика системы охлаждения",
+        "photo": "cooling/01.jpg"
+      },
+      {
+        "name": "Замена помпы",
+        "photo": "cooling/02.jpg"
+      },
+      {
+        "name": "Замена радиатора",
+        "photo": "cooling/03.jpg"
+      },
+      {
+        "name": "Мойка радиаторов",
+        "photo": "cooling/04.jpg"
+      },
+      {
+        "name": "Промывка системы охлаждения",
+        "photo": "cooling/05.jpg"
+      },
+      {
+        "name": "Диагностика кондиционера",
+        "photo": "climate/01.jpg"
+      },
+      {
+        "name": "Заправка кондиционера",
+        "photo": "climate/02.jpg"
+      },
+      {
+        "name": "Ремонт печки и климат-контроля",
+        "photo": "climate/03.jpg"
+      }
+    ],
+    "icon": "thermometer"
+  },
+  {
+    "id": "fuel",
+    "name": "Топливная система",
+    "items": [
+      {
+        "name": "Диагностика топливного насоса ТНВД",
+        "photo": "fuel/01.jpg"
+      },
+      {
+        "name": "Диагностика топливной системы TDI",
+        "photo": "fuel/02.jpg"
+      },
+      {
+        "name": "Промывка топливной системы",
+        "photo": "fuel/03.jpg"
+      },
+      {
+        "name": "Чистка инжектора",
+        "photo": "fuel/04.jpg"
+      },
+      {
+        "name": "Чистка форсунок высокого давления FSI",
+        "photo": "fuel/05.jpg"
+      }
+    ],
+    "icon": "fuel"
+  },
+  {
+    "id": "maintenance",
+    "name": "Техническое обслуживание",
+    "items": [
+      {
+        "name": "Диагностика перед покупкой",
+        "photo": "maintenance/01.jpg"
+      },
+      {
+        "name": "Замена масла и фильтров",
+        "photo": "maintenance/02.jpg"
+      },
+      {
+        "name": "Плановое ТО",
+        "photo": "maintenance/03.jpg"
+      },
+      {
+        "name": "Проверка уровней жидкостей",
+        "photo": "maintenance/04.jpg"
+      }
+    ],
+    "icon": "wrench"
+  }
+]

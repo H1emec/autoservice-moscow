@@ -1,0 +1,358 @@
+---
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+
+const home = Astro.url.pathname === '/' ? '' : '/';
+const nav = [
+  { id: 'top', label: 'Главная', key: 'nav.home' },
+  { id: 'services', label: 'Услуги', key: 'nav.services' },
+  { id: 'about', label: 'О нас', key: 'nav.about' },
+  { id: 'gallery', label: 'Галерея', key: 'nav.gallery' },
+  { id: 'reviews', label: 'Отзывы', key: 'nav.reviews' },
+  { id: 'contacts', label: 'Контакты', key: 'nav.contacts' },
+];
+const href = (id: string) => (id === 'top' ? (home ? '/' : '#top') : `${home}#${id}`);
+---
+
+<header class="header" data-header>
+  <div class="header__inner">
+    <a class="logo" href={href('top')}>
+      <span class="logo__mark"><Icon name="car-front" size={22} stroke={1.8} /></span>
+      <span class="logo__word" data-i18n="site.name">{site.name}</span>
+    </a>
+
+    <nav class="nav" aria-label="Основная навигация" data-i18n-attr="aria-label:nav.main">
+      <ul role="list">
+        {nav.map((n) => (
+          <li><a href={href(n.id)} data-nav={n.id} data-i18n={n.key}>{n.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <a class="header__address" href={`${home}#contacts`}>
+        <Icon name="map-pin" size={18} />
+        <span>
+          <span class="header__address-city" data-i18n="site.address.city">{site.address.city}</span>
+          <span data-i18n="site.address.street">{site.address.street}</span>
+        </span>
+      </a>
+      <a class="header__phone" href={`tel:${site.phone.href}`}>
+        <Icon name="phone" size={18} />
+        <span>{site.phone.display}</span>
+      </a>
+      <a class="btn btn--primary btn--sm header__cta" href={`${home}#booking`} data-i18n="header.cta">Записаться</a>
+      <button
+        class="burger"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Открыть меню"
+        data-burger
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu>
+    <nav aria-label="Мобильная навигация" data-i18n-attr="aria-label:nav.mobile" class="mobile-menu__nav">
+      <ul role="list">
+        {nav.map((n) => (
+          <li><a href={href(n.id)} data-nav={n.id} data-i18n={n.key}>{n.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="mobile-menu__info">
+      <a href={`${home}#contacts`}><Icon name="map-pin" size={20} /> <span data-i18n="site.address.full">{site.address.full}</span></a>
+      <a href={`tel:${site.phone.href}`}><Icon name="phone" size={20} /> <span>{site.phone.display}</span></a>
+      <a class="btn btn--primary" href={`${home}#booking`} data-i18n="hero.cta1">Записаться на обслуживание</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    height: var(--header-h);
+  }
+  /* Фон шапки всегда тёмный и не меняется при прокрутке: нет перехода, значит нет скачка
+     (в том числе у тех, кто отключил анимации в системе). */
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(17, 18, 20, 0.94);
+    box-shadow: 0 1px 0 var(--line);
+    pointer-events: none;
+  }
+
+  .header__inner {
+    height: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    flex: none;
+  }
+  .logo__mark {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    border: 1px solid rgba(255, 107, 53, 0.55);
+    color: var(--accent);
+    transition:
+      background-color 0.3s var(--ease),
+      color 0.3s var(--ease);
+  }
+  .logo:hover .logo__mark {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .logo__word {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  }
+
+  .nav {
+    display: none;
+  }
+  .nav ul {
+    display: flex;
+    gap: clamp(14px, 1.5vw, 28px);
+    margin: 0;
+    padding: 0;
+  }
+  .nav a {
+    position: relative;
+    display: block;
+    padding: 8px 0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: #d3d5d9;
+    transition: color 0.2s var(--ease);
+  }
+  .nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 2px;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+  .nav a:hover,
+  .nav a[aria-current='true'] {
+    color: #fff;
+  }
+  .nav a:hover::after,
+  .nav a[aria-current='true']::after {
+    transform: scaleX(1);
+  }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: clamp(14px, 1.8vw, 28px);
+  }
+  .header__address {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-size: 0.8125rem;
+    line-height: 1.3;
+    color: #d3d5d9;
+  }
+  .header__address > span {
+    display: grid;
+  }
+  .header__address-city {
+    color: var(--muted);
+  }
+  .header__address svg,
+  .header__phone svg {
+    color: var(--accent);
+    flex: none;
+  }
+  .header__address:hover {
+    color: #fff;
+  }
+  .header__phone {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    white-space: nowrap;
+  }
+  .header__phone:hover span {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .header__cta {
+    display: none;
+  }
+
+  .burger {
+    display: grid;
+    gap: 6px;
+    align-content: center;
+    justify-items: center;
+    width: 48px;
+    height: 48px;
+    margin-right: -8px;
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+  .burger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition:
+      transform 0.35s var(--ease),
+      opacity 0.2s var(--ease);
+  }
+  .menu-open .burger span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .menu-open .burger span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-open .burger span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Мобильное меню */
+  .mobile-menu {
+    position: fixed;
+    inset: var(--header-h) 0 0 0;
+    padding: 24px var(--gutter) 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+    background: var(--bg);
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.3s var(--ease),
+      transform 0.4s var(--ease),
+      visibility 0s linear 0.4s;
+  }
+  .menu-open .mobile-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+  .mobile-menu__nav ul {
+    display: grid;
+    margin: 0;
+    padding: 0;
+  }
+  .mobile-menu__nav a {
+    display: block;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.35rem;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .mobile-menu__nav a[aria-current='true'] {
+    color: var(--accent);
+  }
+  .mobile-menu__info {
+    display: grid;
+    gap: 16px;
+  }
+  .mobile-menu__info a:not(.btn) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #d3d5d9;
+    text-decoration: none;
+  }
+  .mobile-menu__info svg {
+    color: var(--accent);
+    flex: none;
+  }
+
+  /* Узкие телефоны: логотип, флаг и бургер должны помещаться в одну строку на любом языке */
+  @media (max-width: 400px) {
+    .header__inner {
+      gap: 8px;
+    }
+    .logo {
+      gap: 8px;
+    }
+    .logo__mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+    }
+    .logo__word {
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+    }
+    .header__actions {
+      gap: 4px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .nav {
+      display: block;
+    }
+    .header__phone,
+    .header__cta {
+      display: inline-flex;
+    }
+    .burger,
+    .mobile-menu {
+      display: none;
+    }
+  }
+  @media (min-width: 1480px) {
+    .header__address {
+      display: inline-flex;
+    }
+  }
+  @media (max-width: 1279px) {
+    .header__cta {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { initHeader } from '../scripts/header';
+  initHeader();
+</script>

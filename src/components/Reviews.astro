@@ -1,0 +1,292 @@
+---
+import { reviews, reviewsIntro } from '../config/reviews';
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+import Stars from './Stars.astro';
+
+const [featured, ...rest] = reviews;
+---
+
+<section class="section reviews" id="reviews" aria-labelledby="reviews-title">
+  <div class="container">
+    <div class="reviews__head reveal">
+      <h2 id="reviews-title" class="h2" data-i18n="rev.title">{reviewsIntro.title}</h2>
+      <button class="btn btn--ghost" type="button" data-review-open aria-haspopup="dialog" data-i18n="rev.cta">{reviewsIntro.cta}</button>
+    </div>
+
+    <div class="reviews__grid">
+      <figure class="rev-main reveal">
+        <Icon name="message-square" size={32} stroke={1.4} class="rev-main__ic" />
+        <blockquote class="rev-main__text" data-i18n="rev.0.text">{featured.text}</blockquote>
+        <figcaption class="rev-main__by">
+          <span class="rev__name" data-i18n="rev.0.name">{featured.name}</span>
+          <Stars rating={featured.rating} size={20} />
+          <time class="rev__date" datetime={featured.isoDate} data-i18n="rev.0.date">{featured.date}</time>
+        </figcaption>
+      </figure>
+
+      <ul class="rev-list" role="list">
+        {rest.map((r, i) => (
+          <li class="rev reveal" style={`--d:${(i + 1) * 90}ms`}>
+            <div class="rev__meta">
+              <span class="rev__name" data-i18n={`rev.${i + 1}.name`}>{r.name}</span>
+              <Stars rating={r.rating} />
+              <time class="rev__date" datetime={r.isoDate} data-i18n={`rev.${i + 1}.date`}>{r.date}</time>
+            </div>
+            <p class="rev__text" data-i18n={`rev.${i + 1}.text`}>{r.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {site.reviewsAreDemo && (
+      <p class="reviews__demo" data-i18n="rev.demo">
+        Демонстрационные отзывы: примеры текста для макета, не отзывы реальных клиентов.
+      </p>
+    )}
+  </div>
+
+  <dialog class="rdlg" data-review-dialog aria-labelledby="rdlg-title">
+    <form
+      class="rform"
+      method="dialog"
+      data-review-form
+      data-endpoint={site.endpoints.review}
+      data-email={site.email}
+      novalidate
+    >
+      <div class="rform__head">
+        <h3 id="rdlg-title" class="rform__title" data-i18n="rd.title">Оставить отзыв</h3>
+        <button class="rdlg__x" type="button" data-review-close aria-label="Закрыть" data-i18n-attr="aria-label:lb.close"><Icon name="x" size={20} stroke={2} /></button>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="r-name"><span data-i18n="rd.name">Ваше имя</span> <span class="req" aria-hidden="true">*</span></label>
+        <input class="input" id="r-name" name="name" type="text" autocomplete="name" required aria-describedby="r-name-err" />
+        <p class="field__error" id="r-name-err"></p>
+      </div>
+
+      <fieldset class="field rating" aria-describedby="r-rating-err">
+        <legend class="field__label"><span data-i18n="rd.rating">Оценка</span> <span class="req" aria-hidden="true">*</span></legend>
+        <div class="rating__row">
+          {[5, 4, 3, 2, 1].map((n) => (
+            <>
+              <input class="visually-hidden" type="radio" name="rating" id={`r-star-${n}`} value={n} />
+              <label for={`r-star-${n}`} title={`${n} из 5`} data-i18n-attr="title:rd.star" data-i18n-vars={JSON.stringify({ n })}>
+                <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7 6.1 20.8l1.2-6.5L2.5 9.7l6.6-.9z" stroke-linejoin="round" /></svg>
+                <span class="visually-hidden" data-i18n="rd.star" data-i18n-vars={JSON.stringify({ n })}>{n} из 5</span>
+              </label>
+            </>
+          ))}
+        </div>
+        <p class="field__error" id="r-rating-err"></p>
+      </fieldset>
+
+      <div class="field">
+        <label class="field__label" for="r-text"><span data-i18n="rd.text">Текст отзыва</span> <span class="req" aria-hidden="true">*</span></label>
+        <textarea class="input" id="r-text" name="text" rows="5" required aria-describedby="r-text-err" placeholder="Что вы ремонтировали и что понравилось или не понравилось" data-i18n-attr="placeholder:rd.ph.text"></textarea>
+        <p class="field__error" id="r-text-err"></p>
+      </div>
+
+      <div class="honeypot" aria-hidden="true">
+        <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+      </div>
+
+      <button class="btn btn--primary" type="submit" data-review-submit data-i18n="rd.submit">Отправить отзыв</button>
+      <div class="form-status" role="status" aria-live="polite" hidden data-status></div>
+    </form>
+  </dialog>
+</section>
+
+<style>
+  .reviews__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px 40px;
+    margin-bottom: clamp(36px, 5vw, 64px);
+  }
+  .reviews__grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rev-main {
+    position: relative;
+    display: grid;
+    gap: 28px;
+    align-content: space-between;
+    padding: clamp(26px, 4vw, 52px);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+  }
+  .rev-main :global(.rev-main__ic) {
+    color: var(--accent);
+  }
+  .rev-main__text {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.15rem, 2.1vw, 1.7rem);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+  }
+  .rev-main__by,
+  .rev__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+  }
+  .rev__name {
+    font-weight: 600;
+  }
+  .rev__date {
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  .rev-list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+  }
+  .rev {
+    display: grid;
+    gap: 12px;
+    padding: clamp(18px, 2.4vw, 28px) 0;
+    border-top: 1px solid var(--line-strong);
+  }
+  .rev:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+  .rev__text {
+    color: #d3d5d9;
+    max-width: 60ch;
+    text-wrap: pretty;
+  }
+
+  .reviews__demo {
+    margin-top: 32px;
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+
+  @media (min-width: 1024px) {
+    .reviews__grid {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      gap: clamp(32px, 5vw, 72px);
+      align-items: stretch;
+    }
+  }
+
+  /* Диалог отзыва */
+  .rdlg {
+    width: min(560px, calc(100vw - 24px));
+    max-height: calc(100dvh - 24px);
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-l);
+    background: var(--card);
+    color: var(--text);
+    overflow: auto;
+  }
+  .rdlg[open] {
+    animation: dlg-in 0.4s var(--ease);
+  }
+  .rdlg::backdrop {
+    background: rgba(8, 9, 10, 0.78);
+    backdrop-filter: blur(4px);
+  }
+  .rform {
+    display: grid;
+    gap: 20px;
+    padding: clamp(22px, 4vw, 36px);
+  }
+  .rform__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .rform__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+  }
+  .rdlg__x {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: none;
+    color: #fff;
+    transition: background-color 0.2s var(--ease);
+  }
+  .rdlg__x:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .rating {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+  }
+  .rating__row {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .rating__row label {
+    display: block;
+    cursor: pointer;
+    line-height: 0;
+    padding: 2px;
+    border-radius: 6px;
+  }
+  .rating__row svg {
+    fill: none;
+    stroke: #6b6f77;
+    stroke-width: 1.6;
+    transition:
+      fill 0.15s var(--ease),
+      stroke 0.15s var(--ease),
+      transform 0.25s var(--ease);
+  }
+  .rating__row input:checked ~ label svg,
+  .rating__row label:hover svg,
+  .rating__row label:hover ~ label svg {
+    fill: var(--accent);
+    stroke: var(--accent);
+  }
+  .rating__row label:hover svg {
+    transform: scale(1.12);
+  }
+  .rating__row input:focus-visible + label {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .field[data-invalid='true'].rating .field__label {
+    color: var(--error);
+  }
+  @keyframes dlg-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px) scale(0.98);
+    }
+  }
+</style>
+
+<script>
+  import { initReviewDialog } from '../scripts/review-dialog';
+  initReviewDialog();
+</script>

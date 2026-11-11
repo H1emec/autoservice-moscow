@@ -1,0 +1,31 @@
+---
+interface Props {
+  rating: number;
+  size?: number;
+}
+const { rating, size = 18 } = Astro.props;
+---
+
+<span class="stars" role="img" aria-label={`Оценка ${rating} из 5`} data-i18n-attr="aria-label:stars.label" data-i18n-vars={JSON.stringify({ n: rating })}>
+  {[1, 2, 3, 4, 5].map((n) => (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true" class:list={['star', { 'is-on': n <= rating }]}>
+      <path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7 6.1 20.8l1.2-6.5L2.5 9.7l6.6-.9z" stroke-linejoin="round" />
+    </svg>
+  ))}
+</span>
+
+<style>
+  .stars {
+    display: inline-flex;
+    gap: 3px;
+  }
+  .star {
+    fill: none;
+    stroke: #5c6068;
+    stroke-width: 1.6;
+  }
+  .star.is-on {
+    fill: var(--accent);
+    stroke: var(--accent);
+  }
+</style>

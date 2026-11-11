@@ -1,0 +1,164 @@
+---
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+
+const home = Astro.url.pathname === '/' ? '' : '/';
+const year = new Date().getFullYear();
+const links = [
+  { id: 'services', label: 'Услуги', key: 'nav.services' },
+  { id: 'about', label: 'О нас', key: 'nav.about' },
+  { id: 'gallery', label: 'Галерея', key: 'nav.gallery' },
+  { id: 'reviews', label: 'Отзывы', key: 'nav.reviews' },
+  { id: 'contacts', label: 'Контакты', key: 'nav.contacts' },
+  { id: 'booking', label: 'Записаться', key: 'header.cta' },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="footer__logo" href={home ? '/' : '#top'}>
+          <span class="footer__mark"><Icon name="car-front" size={20} stroke={1.8} /></span>
+          <span data-i18n="site.name">{site.name}</span>
+        </a>
+        <p data-i18n="footer.desc">Диагностика, обслуживание и ремонт автомобилей любых марок в Москве. Объясняем, что сломалось, и согласуем цену до начала работ.</p>
+      </div>
+
+      <nav aria-label="Навигация в подвале" data-i18n-attr="aria-label:nav.footer">
+        <h2 class="footer__h" data-i18n="footer.sections">Разделы</h2>
+        <ul role="list">
+          {links.map((l) => <li><a href={`${home}#${l.id}`} data-i18n={l.key}>{l.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="footer__h" data-i18n="nav.contacts">Контакты</h2>
+        <ul role="list" class="footer__contacts">
+          <li><Icon name="phone" size={18} /><a href={`tel:${site.phone.href}`}>{site.phone.display}</a></li>
+          <li><Icon name="map-pin" size={18} /><span data-i18n="site.address.full">{site.address.full}</span></li>
+          <li>
+            <Icon name="instagram" size={18} />
+            {site.instagram.url ? <a href={site.instagram.url} target="_blank" rel="noopener noreferrer">{site.instagram.handle}</a> : <span>{site.instagram.handle}</span>}
+          </li>
+          <li>
+            <Icon name="mail" size={18} />
+            {site.email ? <a href={`mailto:${site.email}`}>{site.email}</a> : <span>{site.email}</span>}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© {year} <span data-i18n="site.name">{site.name}</span>. <span data-i18n="footer.rights">Все права защищены.</span></p>
+      <p class="footer__legal">
+        <a href="/privacy" data-i18n="footer.privacy">Политика конфиденциальности</a>
+        <a href="/credits" data-i18n="footer.credits">Источники фото</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    padding-block: clamp(56px, 7vw, 96px) 28px;
+  }
+  .footer__grid {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    margin-bottom: 18px;
+  }
+  .footer__mark {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 107, 53, 0.55);
+    color: var(--accent);
+  }
+  .footer__brand p {
+    color: var(--muted);
+    max-width: 38ch;
+    text-wrap: pretty;
+  }
+  .footer__h {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .footer ul {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+  }
+  .footer a {
+    text-decoration: none;
+    color: #e4e5e8;
+  }
+  .footer a:hover {
+    color: var(--accent);
+  }
+  .footer__contacts li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    color: #e4e5e8;
+  }
+  .footer__contacts svg {
+    color: var(--accent);
+    flex: none;
+    margin-top: 3px;
+  }
+  .footer__bottom {
+    margin-top: clamp(40px, 6vw, 72px);
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+  .footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+  .footer__legal a {
+    color: var(--muted);
+    text-decoration: underline;
+  }
+  .footer__legal a:hover {
+    color: #fff;
+  }
+  @media (min-width: 800px) {
+    .footer__grid {
+      grid-template-columns: 1.4fr 0.8fr 1.2fr;
+      gap: 64px;
+    }
+  }
+  @media (max-width: 767px) {
+    .footer {
+      padding-bottom: 96px; /* место под нижнюю панель */
+    }
+  }
+</style>

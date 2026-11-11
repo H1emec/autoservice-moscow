@@ -1,0 +1,136 @@
+---
+import { brands, brandsIntro } from '../config/brands';
+---
+
+<section class="brands" id="brands" aria-labelledby="brands-title">
+  <div class="container">
+    <h2 id="brands-title" class="brands__title" data-i18n="brands.title">{brandsIntro}</h2>
+    <button class="brands__pause" type="button" aria-pressed="false" data-brands-pause>
+      <span data-label-off data-i18n="brands.pause">Остановить ленту</span><span data-label-on hidden data-i18n="brands.resume">Запустить ленту</span>
+    </button>
+  </div>
+
+  <div class="brands__viewport">
+    <ul class="brands__track" role="list">
+      {brands.map((b) => (
+        <li class="brands__item">
+          <img src={`/brands/${b.file}`} alt={b.name} height={b.h} style={`height:${b.h}px`} loading="lazy" decoding="async" />
+        </li>
+      ))}
+      {brands.map((b) => (
+        <li class="brands__item" aria-hidden="true">
+          <img src={`/brands/${b.file}`} alt="" height={b.h} style={`height:${b.h}px`} loading="lazy" decoding="async" />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .brands {
+    padding-block: clamp(40px, 5vw, 64px);
+    border-block: 1px solid var(--line);
+    background: var(--bg);
+  }
+  .brands__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(0.72rem, 1.1vw, 0.875rem);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    text-wrap: balance;
+    margin-bottom: clamp(28px, 4vw, 44px);
+  }
+  .brands__pause {
+    display: block;
+    margin: calc(-1 * clamp(14px, 2vw, 24px)) auto clamp(20px, 3vw, 32px);
+    padding: 6px 12px;
+    background: none;
+    border: 0;
+    color: var(--muted);
+    font-size: 0.8125rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .brands__pause:hover {
+    color: #fff;
+  }
+  .brands.is-paused .brands__track {
+    animation-play-state: paused;
+  }
+  .brands__viewport {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+  .brands__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    margin: 0;
+    padding: 0;
+    animation: marquee 55s linear infinite;
+  }
+  .brands__viewport:hover .brands__track,
+  .brands__viewport:focus-within .brands__track {
+    animation-play-state: paused;
+  }
+  .brands__item {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: clamp(110px, 12vw, 160px);
+    height: 56px;
+  }
+  .brands__item img {
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
+    /* монохром: любые цвета логотипа превращаем в белый, затем приглушаем до серого */
+    filter: brightness(0) invert(1);
+    opacity: 0.5;
+    transition: opacity 0.3s var(--ease);
+  }
+  .brands__item:hover img {
+    opacity: 0.95;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brands__pause {
+      display: none;
+    }
+    .brands__track {
+      animation: none;
+      width: auto;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding-inline: var(--gutter);
+    }
+    .brands__item[aria-hidden='true'] {
+      display: none;
+    }
+    .brands__viewport {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('.brands');
+  const btn = root?.querySelector<HTMLButtonElement>('[data-brands-pause]');
+  btn?.addEventListener('click', () => {
+    const paused = root!.classList.toggle('is-paused');
+    btn.setAttribute('aria-pressed', String(paused));
+    btn.querySelector<HTMLElement>('[data-label-off]')!.hidden = paused;
+    btn.querySelector<HTMLElement>('[data-label-on]')!.hidden = !paused;
+  });
+</script>

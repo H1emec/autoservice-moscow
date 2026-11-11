@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../config/site';
+---
+
+<Layout
+  title={`Политика конфиденциальности: ${site.name}`}
+  description="Как мы обрабатываем персональные данные, которые вы оставляете в формах на сайте."
+  titleKey="meta.privacy.title"
+  descKey="meta.privacy.description"
+  noindex
+>
+  <div class="container doc">
+    <h1 data-i18n="priv.title">Политика конфиденциальности</h1>
+    <p class="note"><strong data-i18n="priv.note.a">Шаблон.</strong> <span data-i18n="priv.note.b">Это примерный текст для демонстрации сайта. Перед запуском замените его документом, составленным юристом по законодательству вашей страны.</span></p>
+
+    <h2 data-i18n="priv.h1">Какие данные мы собираем</h2>
+    <p data-i18n="priv.p1">Через формы на сайте мы получаем имя, номер телефона, марку автомобиля и описание задачи. Эти данные вы указываете добровольно.</p>
+
+    <h2 data-i18n="priv.h2">Зачем мы их используем</h2>
+    <ul>
+      <li data-i18n="priv.l1">чтобы связаться с вами и согласовать запись на обслуживание;</li>
+      <li data-i18n="priv.l2">чтобы подготовиться к работам с вашим автомобилем;</li>
+      <li data-i18n="priv.l3">чтобы ответить на ваш отзыв или вопрос.</li>
+    </ul>
+
+    <h2 data-i18n="priv.h3">Хранение и передача</h2>
+    <p><span data-i18n="priv.p3">Мы не передаём ваши данные третьим лицам, кроме случаев, предусмотренных законом. Срок хранения:</span> <strong data-i18n="fill">[ЗАПОЛНИТЬ]</strong></p>
+
+    <h2 data-i18n="priv.h4">Ваши права</h2>
+    <p data-i18n="priv.p4">Вы можете запросить уточнение или удаление ваших данных, обратившись к нам по контактам, указанным на сайте.</p>
+
+    <h2 data-i18n="priv.h5">Оператор данных</h2>
+    <p><span data-i18n="site.name">{site.name}</span>, <span data-i18n="site.address.full">{site.address.full}</span>. <span data-i18n="priv.op">Реквизиты:</span> <strong data-i18n="fill">[ЗАПОЛНИТЬ]</strong></p>
+  </div>
+</Layout>

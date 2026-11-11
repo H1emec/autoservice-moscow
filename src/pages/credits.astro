@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { photos, type PhotoKey } from '../config/photos';
+import { site } from '../config/site';
+
+const rows = Object.entries(photos) as [PhotoKey, (typeof photos)[PhotoKey]][];
+---
+
+<Layout
+  title={`Источники фотографий: ${site.name}`}
+  description="Авторы и лицензии фотографий, использованных на сайте."
+  titleKey="meta.credits.title"
+  descKey="meta.credits.description"
+  noindex
+>
+  <div class="container doc">
+    <h1 data-i18n="cr.title">Источники фотографий</h1>
+    <p class="note"><strong data-i18n="cr.note.a">Временные материалы.</strong> <span data-i18n="cr.note.b">Фотографии взяты из Wikimedia Commons и распространяются по лицензии CC BY 2.0. Перед запуском сайта для клиента замените их на снимки его автосервиса.</span></p>
+    <ul>
+      {rows.map(([key, p]) => (
+        <li>
+          <a href={p.credit.url} target="_blank" rel="noopener noreferrer" data-i18n={`gal.alt.${key}`}>{p.alt}</a>
+          — {p.credit.author}, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">{p.credit.license}</a>, Wikimedia Commons
+        </li>
+      ))}
+    </ul>
+    <p style="margin-top:28px" data-i18n="cr.outro">Логотипы автомобильных марок принадлежат их владельцам и показаны только для обозначения обслуживаемых марок. Иконки: Lucide (лицензия ISC), Simple Icons (CC0).</p>
+  </div>
+</Layout>

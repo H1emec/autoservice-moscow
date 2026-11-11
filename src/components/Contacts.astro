@@ -1,0 +1,184 @@
+---
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+
+const { lat, lon, zoomSpan } = site.map;
+const dLat = zoomSpan * 0.55;
+const bbox = [lon - zoomSpan, lat - dLat, lon + zoomSpan, lat + dLat].map((n) => n.toFixed(5)).join('%2C');
+const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lon}`;
+const mapLink = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}`;
+const routeLink = `https://yandex.ru/maps/?rtext=~${lat},${lon}&rtt=auto`;
+---
+
+<section class="section section--alt contacts" id="contacts" aria-labelledby="contacts-title">
+  <div class="container contacts__grid">
+    <div class="contacts__info reveal">
+      <h2 id="contacts-title" class="h2" data-i18n="c.title">Мы ждём вас</h2>
+
+      <dl class="clist">
+        <div>
+          <dt><Icon name="map-pin" size={20} /> <span data-i18n="c.address">Адрес</span></dt>
+          <dd data-i18n="site.address.full">{site.address.full}</dd>
+        </div>
+        <div>
+          <dt><Icon name="phone" size={20} /> <span data-i18n="c.phone">Телефон</span></dt>
+          <dd><a href={`tel:${site.phone.href}`} class="clist__phone">{site.phone.display}</a></dd>
+        </div>
+        <div>
+          <dt><Icon name="clock" size={20} /> <span data-i18n="c.hours">Режим работы</span></dt>
+          <dd data-i18n="site.hours">{site.hours}</dd>
+        </div>
+        <div>
+          <dt><Icon name="mail" size={20} /> <span data-i18n="c.email">Email</span></dt>
+          <dd>{site.email ? <a href={`mailto:${site.email}`}>{site.email}</a> : ''}</dd>
+        </div>
+        <div>
+          <dt><Icon name="instagram" size={20} /> <span data-i18n="c.instagram">Instagram</span></dt>
+          <dd>{site.instagram.url ? <a href={site.instagram.url} target="_blank" rel="noopener noreferrer">{site.instagram.handle}</a> : site.instagram.handle}</dd>
+        </div>
+      </dl>
+
+      <div class="contacts__actions">
+        <a class="btn btn--primary" href="#booking"><span data-i18n="c.book">Записаться на обслуживание</span> <Icon name="arrow-right" size={18} class="btn__arrow" /></a>
+        <a class="btn btn--ghost" href={`tel:${site.phone.href}`}><Icon name="phone" size={18} /> <span data-i18n="c.call">Позвонить</span></a>
+        {site.instagram.url ? (
+          <a class="btn btn--ghost" href={site.instagram.url} target="_blank" rel="noopener noreferrer"><Icon name="instagram" size={18} /> <span data-i18n="c.insta">Написать в Instagram</span></a>
+        ) : (
+          <button class="btn btn--ghost" type="button" disabled><Icon name="instagram" size={18} /> <span data-i18n="c.insta">Написать в Instagram</span></button>
+        )}
+      </div>
+    </div>
+
+    <div class="map reveal" style="--d:120ms">
+      <div class="map__box">
+        <iframe
+          class="map__frame"
+          title="Карта"
+          data-i18n-attr="title:map.title"
+          src={mapSrc}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+      <div class="map__links">
+        <a class="btn btn--primary btn--sm" href={routeLink} target="_blank" rel="noopener noreferrer"><Icon name="route" size={16} /> <span data-i18n="map.route">Построить маршрут</span></a>
+        <a class="btn btn--ghost btn--sm" href={mapLink} target="_blank" rel="noopener noreferrer" data-i18n="map.open">Открыть карту</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contacts__grid {
+    display: grid;
+    gap: clamp(36px, 5vw, 72px);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .contacts__info {
+    display: grid;
+    gap: 36px;
+    align-content: start;
+  }
+  .clist {
+    display: grid;
+    margin: 0;
+  }
+  .clist > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line-strong);
+  }
+  .clist > div:last-child {
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .clist dt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+  .clist dt svg {
+    color: var(--accent);
+  }
+  .clist dd {
+    margin: 0;
+    font-size: 1.0625rem;
+  }
+  .clist a {
+    text-decoration: none;
+  }
+  .clist a:hover {
+    color: var(--accent);
+  }
+  .clist__phone {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    letter-spacing: -0.01em;
+  }
+  .contacts__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .contacts__actions .btn--primary {
+    grid-column: 1 / -1;
+  }
+  .contacts__actions .btn {
+    padding-inline: 16px;
+  }
+
+  .map {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+  }
+  /* Тёмная подложка: пока карта грузится или заблокирована, виден цвет карточки, а не светлая плашка */
+  .map__box {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--card);
+    overflow: hidden;
+    height: clamp(320px, 48vw, 560px);
+  }
+  .map__frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    /* OpenStreetMap светлая: переводим в тёмную схему под тему сайта */
+    filter: invert(0.92) hue-rotate(180deg) saturate(0.55) brightness(0.92) contrast(0.95);
+  }
+  .map__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  @media (min-width: 1024px) {
+    .clist > div {
+      grid-template-columns: 180px 1fr;
+      align-items: baseline;
+    }
+    /* карта слева, данные справа: раскладка отличается от соседних разделов */
+    .contacts__grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+    .map {
+      order: -1;
+      grid-template-rows: 1fr auto;
+    }
+    .map__box {
+      height: 100%;
+      min-height: 520px;
+    }
+  }
+  @media (max-width: 479px) {
+    .contacts__actions {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
